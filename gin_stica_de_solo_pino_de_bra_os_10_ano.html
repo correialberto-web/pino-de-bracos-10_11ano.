@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ginástica de Solo — Pino de Braços (10.º Ano)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+          colors: {
+            marinho: {
+              900: '#091a2e',
+              800: '#0f2942',
+              700: '#173c5e',
+              600: '#1f507a',
+            },
+            esmeralda: {
+              700: '#047857',
+              600: '#059669',
+              500: '#10b981',
+              100: '#d1fae5',
+              50: '#ecfdf5',
+            },
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+    .chat-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+    .chat-scroll::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 9999px;
+    }
+    .chat-scroll::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    @media print {
+      header .no-print,
+      #secao-videos,
+      #secao-tutor,
+      .no-print {
+        display: none !important;
+      }
+      body {
+        background: #ffffff !important;
+      }
+      #secao-guiao {
+        display: block !important;
+        box-shadow: none !important;
+        border: 1px solid #cbd5e1 !important;
+        padding: 0 !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+
+  <!-- Cabeçalho Principal -->
+  <header class="bg-gradient-to-br from-marinho-900 via-marinho-800 to-marinho-700 text-white shadow-lg border-b-4 border-esmeralda-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+        <div class="space-y-3 max-w-3xl">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-esmeralda-500/20 text-esmeralda-100 border border-esmeralda-400/40">
+              10.º Ano • Educação Física
+            </span>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-white/10 text-slate-100 border border-white/15">
+              Ginástica de Solo — Pino de Braços
+            </span>
+          </div>
+
+          <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight">
+            Pino de Braços — Progressões, Vídeos e Tutor de Aula
+          </h1>
+
+          <p class="text-sm sm:text-base text-slate-200 leading-relaxed">
+            Ferramenta de aprendizagem autónoma para alunos do 10.º ano: consulta as 5 etapas progressivas com vídeos, regista a tua autoavaliação, tira dúvidas no chat pedagógico e imprime ou descarrega o guião rápido de aula.
+          </p>
+
+          <nav class="no-print flex flex-wrap gap-2 pt-1" aria-label="Navegação da aplicação">
+            <a href="#secao-videos" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-esmeralda-500 hover:bg-esmeralda-600 text-white transition">
+              1. Progressões e Vídeos
+            </a>
+            <a href="#secao-tutor" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white text-marinho-900 hover:bg-slate-100 transition">
+              2. Tutor de Educação Física
+            </a>
+            <a href="#secao-guiao" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/20 transition">
+              3. Guião Pedagógico
+            </a>
+          </nav>
+        </div>
+
+        <!-- Cartão de Progresso Global -->
+        <div class="bg-white/10 backdrop-blur-sm border border-white/15 rounded-2xl p-4 sm:p-5 lg:w-80 shrink-0 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-200">Progresso Global</span>
+            <span id="globalProgressPct" class="text-sm font-extrabold text-esmeralda-300">0%</span>
+          </div>
+          <div class="w-full h-2.5 bg-marinho-900/80 rounded-full overflow-hidden border border-white/10">
+            <div id="globalProgressBar" class="h-full bg-gradient-to-r from-esmeralda-500 to-emerald-300 rounded-full transition-all duration-300" style="width: 0%"></div>
+          </div>
+          <p id="globalProgressText" class="text-xs text-slate-200">
+            0 de 15 critérios concluídos nas 5 etapas.
+          </p>
+          <button id="btnLimparProgresso" type="button" class="no-print w-full py-2 px-3 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/15 transition">
+            Repor autoavaliação
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Faixa de Segurança -->
+  <div class="bg-esmeralda-50 border-b border-esmeralda-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-xs sm:text-sm text-slate-700 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+      <p>
+        <strong class="text-marinho-900">Segurança em Ginástica de Solo:</strong> Utiliza sempre colchões adequados, espaço livre, braços estendidos com ombros ativos e domina o <strong>rolamento à frente de segurança</strong>.
+      </p>
+      <span id="toastStatus" class="hidden px-3 py-1 rounded-full text-xs font-semibold bg-marinho-800 text-white"></span>
+    </div>
+  </div>
+
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+    <!-- =====================================================================
+         1. SECÇÃO DE PROGRESSÕES E VÍDEOS DO PINO DE BRAÇOS
+         ===================================================================== -->
+    <section id="secao-videos" aria-labelledby="titulo-videos" class="space-y-6">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-esmeralda-600">Etapas Progressivas &amp; Vídeo</span>
+          <h2 id="titulo-videos" class="text-xl sm:text-2xl font-bold text-marinho-900 mt-0.5">
+            Progressões e Vídeos do Pino de Braços
+          </h2>
+          <p class="text-sm text-slate-600 mt-1">
+            Seleciona qualquer etapa abaixo para abrir o player de vídeo, filtrar por dificuldade ou marcar a tua autoavaliação.
+          </p>
+        </div>
+        <button id="btnResetFiltros" type="button" class="self-start md:self-auto px-3.5 py-2 rounded-xl text-xs font-semibold bg-white border border-slate-300 text-slate-700 hover:bg-slate-100 transition">
+          Mostrar todas as etapas
+        </button>
+      </div>
+
+      <!-- Filtros por Etapa e Dificuldade -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-sm space-y-4">
+        <div class="space-y-2">
+          <p class="text-xs font-bold uppercase tracking-wider text-marinho-800">Filtrar por Etapa Progressiva</p>
+          <div id="filtrosEtapa" class="flex flex-wrap gap-2">
+            <button type="button" data-etapa="todas" class="filtro-etapa px-3 py-2 rounded-xl text-xs font-semibold bg-marinho-800 text-white transition">
+              Todas (5)
+            </button>
+            <button type="button" data-etapa="prerequisitos" class="filtro-etapa px-3 py-2 rounded-xl text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
+              1. Pré-requisitos e força
+            </button>
+            <button type="button" data-etapa="parede" class="filtro-etapa px-3 py-2 rounded-xl text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
+              2. Apoio facial invertido na parede / caranguejo
+            </button>
+            <button type="button" data-etapa="impulso" class="filtro-etapa px-3 py-2 rounded-xl text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
+              3. Impulso e subida controlada
+            </button>
+            <button type="button" data-etapa="livre" class="filtro-etapa px-3 py-2 rounded-xl text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
+              4. Pino de braços livre e alinhamento
+            </button>
+            <button type="button" data-etapa="saida" class="filtro-etapa px-3 py-2 rounded-xl text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
+              5. Saída de segurança / rolamento
+            </button>
+          </div>
+        </div>
+
+        <div class="space-y-2 pt-3 border-t border-slate-100">
+          <p class="text-xs font-bold uppercase tracking-wider text-marinho-800">Filtrar por Dificuldade</p>
+          <div id="filtrosDificuldade" class="flex flex-wrap gap-2">
+            <button type="button" data-dificuldade="todas" class="filtro-dif px-3 py-2 rounded-xl text-xs font-semibold bg-esmeralda-600 text-white transition">
+              Todas as dificuldades
+            </button>
+            <button type="button" data-dificuldade="Fácil" class="filtro-dif px-3 py-2 rounded-xl text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
+              Fácil
+            </button>
+            <button type="button" data-dificuldade="Intermédio" class="filtro-dif px-3 py-2 rounded-xl text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
+              Intermédio
+            </button>
+            <button type="button" data-dificuldade="Avançado" class="filtro-dif px-3 py-2 rounded-xl text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
+              Avançado
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Painel de Player Incorporado do YouTube (Sempre disponível e funcional) -->
+      <div id="painelPlayer" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="bg-marinho-800 text-white px-4 sm:px-6 py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <span id="playerEtapaBadge" class="text-xs font-semibold text-esmeralda-300 uppercase tracking-wider">Etapa Ativa</span>
+            <h3 id="playerTitulo" class="text-base sm:text-lg font-bold">Ginástica de Solo - Pino de braços</h3>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <a id="playerLinkExterno" href="https://www.youtube.com/watch?v=d5Z48_XsGI0" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-esmeralda-500 hover:bg-esmeralda-600 text-white transition">
+              <span>Abrir no YouTube</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12">
+          <!-- Coluna do Player -->
+          <div class="lg:col-span-7 bg-slate-950 flex flex-col justify-center">
+            <div class="aspect-video w-full relative">
+              <iframe
+                id="youtubeIframe"
+                class="w-full h-full"
+                src="https://www.youtube-nocookie.com/embed/d5Z48_XsGI0?rel=0"
+                title="Vídeo de progressão do Pino de Braços"
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <!-- Fallback direto caso o embed seja bloqueado pelo navegador/rede -->
+            <div class="bg-slate-900 text-slate-200 px-4 py-3 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-t border-slate-800">
+              <span>Se o leitor incorporado não carregar na rede escolar, abre o vídeo diretamente no YouTube:</span>
+              <a id="playerFallbackLink" href="https://www.youtube.com/watch?v=d5Z48_XsGI0" target="_blank" rel="noopener noreferrer" class="font-semibold text-esmeralda-400 hover:text-esmeralda-300 underline shrink-0">
+                Ver no YouTube →
+              </a>
+            </div>
+          </div>
+
+          <!-- Coluna de Seleção de Vídeo e Notas Técnicas -->
+          <div class="lg:col-span-5 p-4 sm:p-6 flex flex-col justify-between space-y-4 bg-slate-50/60">
+            <div class="space-y-2">
+              <p class="text-xs font-bold uppercase tracking-wider text-marinho-800">Selecionar Vídeo da Etapa</p>
+              <div id="seletorVideosEtapa" class="grid grid-cols-1 gap-2"></div>
+            </div>
+
+            <div class="bg-white rounded-xl p-3.5 border border-slate-200 space-y-1.5 text-xs sm:text-sm">
+              <p class="font-bold text-marinho-900">Foco desta demonstração</p>
+              <p id="playerDescricao" class="text-slate-600 leading-relaxed"></p>
+              <p id="playerCanal" class="text-xs font-medium text-esmeralda-700 pt-1"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grelha de Cartões Interativos das 5 Etapas Progressivas -->
+      <div id="grelhaEtapas" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </section>
+
+    <!-- =====================================================================
+         2. CHAT DE PERGUNTAS E RESPOSTAS (TUTOR DE EDUCAÇÃO FÍSICA)
+         ===================================================================== -->
+    <section id="secao-tutor" aria-labelledby="titulo-tutor" class="space-y-5">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-slate-200 pb-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-esmeralda-600">Apoio em Aula e Estudo</span>
+          <h2 id="titulo-tutor" class="text-xl sm:text-2xl font-bold text-marinho-900 mt-0.5">
+            Tutor de Educação Física — Pino de Braços (10.º Ano)
+          </h2>
+          <p class="text-sm text-slate-600 mt-1">
+            Escolhe uma pergunta rápida ou escreve a tua dúvida sobre técnica, apoio, ajuda do par ou segurança.
+          </p>
+        </div>
+        <button id="btnLimparChat" type="button" class="self-start sm:self-auto px-3.5 py-2 rounded-xl text-xs font-semibold bg-white border border-slate-300 text-slate-700 hover:bg-slate-100 transition">
+          Limpar histórico
+        </button>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="bg-marinho-800 text-white px-4 sm:px-6 py-3.5 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-esmeralda-500 text-white font-bold text-xs flex items-center justify-center shrink-0">
+              EF
+            </div>
+            <div>
+              <p class="text-sm font-bold">Tutor Pedagógico • Ginástica de Solo</p>
+              <p class="text-xs text-slate-200">Resposta instantânea adaptada ao 10.º ano</p>
+            </div>
+          </div>
+          <span class="text-xs px-2.5 py-1 rounded-full bg-esmeralda-500/20 text-esmeralda-200 border border-esmeralda-400/30 font-medium">
+            Online
+          </span>
+        </div>
+
+        <!-- Perguntas Rápidas Pré-Definidas -->
+        <div class="bg-slate-50 border-b border-slate-200 px-4 sm:px-6 py-3.5">
+          <p class="text-xs font-bold uppercase tracking-wider text-marinho-800 mb-2">
+            Perguntas rápidas
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <button type="button" class="chip-pergunta px-3 py-2 rounded-xl text-xs font-medium bg-white text-marinho-900 border border-slate-200 hover:border-esmeralda-500 hover:bg-esmeralda-50/60 transition">
+              Alinhamento corporal
+            </button>
+            <button type="button" class="chip-pergunta px-3 py-2 rounded-xl text-xs font-medium bg-white text-marinho-900 border border-slate-200 hover:border-esmeralda-500 hover:bg-esmeralda-50/60 transition">
+              Colocação das mãos
+            </button>
+            <button type="button" class="chip-pergunta px-3 py-2 rounded-xl text-xs font-medium bg-white text-marinho-900 border border-slate-200 hover:border-esmeralda-500 hover:bg-esmeralda-50/60 transition">
+              Apoio na parede
+            </button>
+            <button type="button" class="chip-pergunta px-3 py-2 rounded-xl text-xs font-medium bg-white text-marinho-900 border border-slate-200 hover:border-esmeralda-500 hover:bg-esmeralda-50/60 transition">
+              Rolamento de saída
+            </button>
+            <button type="button" class="chip-pergunta px-3 py-2 rounded-xl text-xs font-medium bg-white text-marinho-900 border border-slate-200 hover:border-esmeralda-500 hover:bg-esmeralda-50/60 transition">
+              Erros comuns no 10.º ano
+            </button>
+          </div>
+        </div>
+
+        <!-- Mensagens -->
+        <div id="chatLista" class="chat-scroll p-4 sm:p-6 space-y-4 max-h-96 overflow-y-auto bg-white" aria-live="polite"></div>
+
+        <!-- Formulário -->
+        <form id="chatForm" class="border-t border-slate-200 bg-slate-50 p-3 sm:p-4 flex items-center gap-2.5">
+          <label for="chatInput" class="sr-only">Escreve a tua questão sobre o pino de braços</label>
+          <input
+            id="chatInput"
+            type="text"
+            placeholder="Escreve a tua pergunta (ex.: alinhamento corporal, colocação das mãos, ajuda do par)..."
+            class="flex-1 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-esmeralda-500"
+          />
+          <button type="submit" class="px-4 py-2.5 rounded-xl bg-marinho-800 hover:bg-marinho-700 text-white text-sm font-semibold transition shrink-0">
+            Enviar
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         3. RESUMO PEDAGÓGICO / GUIÃO RÁPIDO (IMPRIMÍVEL E DESCARREGÁVEL)
+         ===================================================================== -->
+    <section id="secao-guiao" aria-labelledby="titulo-guiao" class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-8 space-y-6">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-esmeralda-600">Cartão de Referência Rápida</span>
+          <h2 id="titulo-guiao" class="text-xl sm:text-2xl font-bold text-marinho-900 mt-0.5">
+            Guião Pedagógico de Aula — Pino de Braços (10.º Ano)
+          </h2>
+          <p class="text-sm text-slate-600 mt-1">
+            Resumo estruturado para consulta durante a prática gímnica, impressão em PDF ou cópia para caderno.
+          </p>
+        </div>
+
+        <div class="no-print flex flex-wrap gap-2">
+          <button id="btnImprimirGuiao" type="button" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-marinho-800 hover:bg-marinho-700 text-white transition">
+            Imprimir / Guardar PDF
+          </button>
+          <button id="btnCopiarGuiao" type="button" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-esmeralda-600 hover:bg-esmeralda-700 text-white transition">
+            Copiar Guião de Aula
+          </button>
+          <button id="btnDescarregarGuiao" type="button" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-white hover:bg-slate-100 text-marinho-900 border border-slate-300 transition">
+            Descarregar (.txt)
+          </button>
+        </div>
+      </div>
+
+      <div id="conteudoGuiao" class="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs sm:text-sm">
+        <div class="rounded-xl border border-slate-200 bg-slate-50/70 p-4 space-y-2">
+          <h3 class="font-bold text-marinho-900 text-base">1. Organização Técnica Base</h3>
+          <ul class="space-y-1.5 text-slate-700 leading-relaxed list-disc pl-5">
+            <li><strong>Mãos:</strong> à largura dos ombros, dedos afastados e orientados para a frente; peso distribuído entre base da palma e ponta dos dedos.</li>
+            <li><strong>Cabeça e olhar:</strong> posição neutra, olhar fixo num ponto entre as mãos.</li>
+            <li><strong>Cintura escapular e tronco:</strong> braços em extensão, ombros a empurrar o chão, abdómen e glúteos contraídos.</li>
+          </ul>
+        </div>
+
+        <div class="rounded-xl border border-slate-200 bg-slate-50/70 p-4 space-y-2">
+          <h3 class="font-bold text-marinho-900 text-base">2. Sequência de Progressão</h3>
+          <ul class="space-y-1.5 text-slate-700 leading-relaxed list-disc pl-5">
+            <li>Pré-requisitos de força (prancha, apoio facial, força de ombros e core).</li>
+            <li>Apoio facial invertido na parede / caranguejo com controlo postural.</li>
+            <li>Impulso progressivo com perna de chamada e união das pernas na vertical.</li>
+            <li>Sustenção livre com micro-ajustes pelos dedos e saída de segurança.</li>
+          </ul>
+        </div>
+
+        <div class="rounded-xl border border-slate-200 bg-slate-50/70 p-4 space-y-2">
+          <h3 class="font-bold text-marinho-900 text-base">3. Ajuda do Par e Segurança</h3>
+          <ul class="space-y-1.5 text-slate-700 leading-relaxed list-disc pl-5">
+            <li>Colchões adequados e espaço livre de obstáculos.</li>
+            <li>Par colocado lateralmente junto à zona de subida, acompanhando a bacia sem puxões bruscos.</li>
+            <li><strong>Saída de segurança:</strong> rolamento à frente (queixo ao peito, braços a ceder de forma controlada) ou descida alternada por perna.</li>
+          </ul>
+        </div>
+
+        <div class="rounded-xl border border-slate-200 bg-slate-50/70 p-4 space-y-2">
+          <h3 class="font-bold text-marinho-900 text-base">4. Critérios de Autoavaliação (10.º Ano)</h3>
+          <ul class="space-y-1.5 text-slate-700 leading-relaxed list-disc pl-5">
+            <li>Mantém extensão de braços e ombros ativos durante todo o apoio.</li>
+            <li>Alinha pulsos, ombros, bacia e pés na vertical sem hiperlordose lombar.</li>
+            <li>Realiza impulso controlado, união de pernas e saída segura.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-marinho-900 text-slate-300 mt-12 border-t border-marinho-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
+      <p><strong class="text-white">Educação Física — 10.º Ano</strong> • Ginástica de Solo: Pino de Braços</p>
+      <p class="text-slate-400">Aplicação educativa interativa • Português (Portugal)</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      'use strict';
+
+      // -------------------------------------------------------------------
+      // 1. DADOS DAS 5 ETAPAS PROGRESSIVAS E VÍDEOS DO YOUTUBE
+      // -------------------------------------------------------------------
+      const VIDEOS_DISPONIVEIS = [
+        {
+          id: 'v1',
+          titulo: 'Ginástica de Solo - Pino de braços',
+          canal: 'Canal Desporto Mais',
+          youtubeId: 'd5Z48_XsGI0',
+          resumo: 'Demonstração global do pino de braços, postura de partida, alinhamento e controlo técnico.'
+        },
+        {
+          id: 'v2',
+          titulo: '21.2 - Pino de Braços',
+          canal: 'Associação Desportiva OSN',
+          youtubeId: 'DtHiatrfK4U',
+          resumo: 'Colocação das mãos, posição da cabeça, olhar entre os apoios e preparação do impulso.'
+        },
+        {
+          id: 'v3',
+          titulo: '21.3 - Pino de Braços',
+          canal: 'Associação Desportiva OSN',
+          youtubeId: '9TLrxe7ZOAE',
+          resumo: 'Impulso progressivo, união das pernas na vertical e estabilização do apoio.'
+        },
+        {
+          id: 'v4',
+          titulo: 'Como Fazer o Pino / How To Do a Handstand',
+          canal: 'Dicas do Salgueiro',
+          youtubeId: '-GzPv0F5fKg',
+          resumo: 'Progressões práticas, equilíbrio pelos dedos, força de ombros e saída de segurança.'
+        }
+      ];
+
+      const ETAPAS = [
+        {
+          id: 'prerequisitos',
+          ordem: 'Etapa 1',
+          nome: 'Pré-requisitos e força',
+          dificuldade: 'Fácil',
+          videoId: 'd5Z48_XsGI0',
+          descricao: 'Desenvolvimento de força de cinturas escapular e pélvica, prancha frontal, apoio facial e extensão de braços.',
+          criterios: [
+            'Sustenta prancha de braços estendidos durante 20–30 segundos com ombros ativos.',
+            'Mantém o abdómen e glúteos contraídos sem afundar a zona lombar.',
+            'Coloca as mãos à largura dos ombros com os dedos bem afastados.'
+          ]
+        },
+        {
+          id: 'parede',
+          ordem: 'Etapa 2',
+          nome: 'Apoio facial invertido na parede / caranguejo',
+          dificuldade: 'Fácil',
+          videoId: 'DtHiatrfK4U',
+          descricao: 'Familiarização com a inversão, marcha de pés na parede ou apoio invertido em caranguejo para ganhar confiança.',
+          criterios: [
+            'Aceita a posição invertida com respiração controlada e olhar entre as mãos.',
+            'Mantém os cotovelos estendidos durante o apoio na parede ou caranguejo.',
+            'Desce de forma controlada sem precipitação.'
+          ]
+        },
+        {
+          id: 'impulso',
+          ordem: 'Etapa 3',
+          nome: 'Impulso e subida controlada',
+          dificuldade: 'Intermédio',
+          videoId: '9TLrxe7ZOAE',
+          descricao: 'Impulso progressivo com a perna de chamada, aproximação da perna livre e chegada à vertical.',
+          criterios: [
+            'Inicia com perna de chamada à frente e braços estendidos junto às orelhas.',
+            'Impulsiona sem balanço excessivo do tronco.',
+            'Une os pés na vertical com extensão dos joelhos.'
+          ]
+        },
+        {
+          id: 'livre',
+          ordem: 'Etapa 4',
+          nome: 'Pino de braços livre e alinhamento',
+          dificuldade: 'Avançado',
+          videoId: '-GzPv0F5fKg',
+          descricao: 'Alinhamento vertical entre pulsos, ombros, bacia e pés, com micro-ajustes de equilíbrio pelos dedos.',
+          criterios: [
+            'Alinha pulsos, ombros, bacia e pés na vertical.',
+            'Corrige pequenos desequilíbrios com a ponta dos dedos.',
+            'Sustenta o apoio durante 2 a 3 segundos com pés em ponta.'
+          ]
+        },
+        {
+          id: 'saida',
+          ordem: 'Etapa 5',
+          nome: 'Saída de segurança / rolamento',
+          dificuldade: 'Intermédio',
+          videoId: '-GzPv0F5fKg',
+          descricao: 'Domínio do rolamento à frente de segurança ou descida alternada por perna em caso de perda de equilíbrio.',
+          criterios: [
+            'Baixa o queixo ao peito e enrola as costas no rolamento à frente de segurança.',
+            'Flete os braços de forma progressiva ao iniciar o rolamento.',
+            'Executa a saída em colchão adequado e com espaço livre.'
+          ]
+        }
+      ];
+
+      // -------------------------------------------------------------------
+      // 2. ESTADO E PERSISTÊNCIA EM LOCALSTORAGE
+      // -------------------------------------------------------------------
+      const STORAGE_CHECKLIST = 'ef10_pino_progressao_checklist_v2';
+      const STORAGE_CHAT = 'ef10_pino_progressao_chat_v2';
+
+      let estadoFiltro = { etapa: 'todas', dificuldade: 'todas' };
+      let videoAtualId = 'v1';
+      let checklistState = lerJson(STORAGE_CHECKLIST, {});
+      let chatHistorico = lerJson(STORAGE_CHAT, []);
+
+      function lerJson(chave, fallback) {
+        try {
+          const raw = localStorage.getItem(chave);
+          return raw ? JSON.parse(raw) : fallback;
+        } catch (_) {
+          return fallback;
+        }
+      }
+
+      function gravarJson(chave, valor) {
+        try {
+          localStorage.setItem(chave, JSON.stringify(valor));
+        } catch (_) {
+          // Ignora caso o armazenamento local esteja indisponível
+        }
+      }
+
+      function mostrarAviso(texto) {
+        const el = document.getElementById('toastStatus');
+        if (!el) return;
+        el.textContent = texto;
+        el.classList.remove('hidden');
+        clearTimeout(mostrarAviso._timer);
+        mostrarAviso._timer = setTimeout(() => {
+          el.classList.add('hidden');
+        }, 3000);
+      }
+
+      function escaparHtml(str) {
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
+
+      // -------------------------------------------------------------------
+      // 3. PLAYER DE VÍDEO E CARTÕES DE ETAPAS
+      // -------------------------------------------------------------------
+      function selecionarVideo(videoId, etapaNome) {
+        const video = VIDEOS_DISPONIVEIS.find((v) => v.id === videoId) || VIDEOS_DISPONIVEIS[0];
+        videoAtualId = video.id;
+
+        const iframe = document.getElementById('youtubeIframe');
+        const titulo = document.getElementById('playerTitulo');
+        const etapaBadge = document.getElementById('playerEtapaBadge');
+        const linkExt = document.getElementById('playerLinkExterno');
+        const fallbackLink = document.getElementById('playerFallbackLink');
+        const descricao = document.getElementById('playerDescricao');
+        const canal = document.getElementById('playerCanal');
+
+        const urlWatch = `https://www.youtube.com/watch?v=${encodeURIComponent(video.youtubeId)}`;
+        const urlEmbed = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(video.youtubeId)}?rel=0`;
+
+        if (iframe && iframe.getAttribute('src') !== urlEmbed) {
+          iframe.setAttribute('src', urlEmbed);
+        }
+        if (titulo) titulo.textContent = video.titulo;
+        if (etapaBadge) etapaBadge.textContent = etapaNome ? `Etapa selecionada: ${etapaNome}` : 'Vídeo em reprodução';
+        if (linkExt) linkExt.href = urlWatch;
+        if (fallbackLink) fallbackLink.href = urlWatch;
+        if (descricao) descricao.textContent = video.resumo;
+        if (canal) canal.textContent = `Canal: ${video.canal}`;
+
+        renderizarSeletorVideos();
+      }
+
+      function renderizarSeletorVideos() {
+        const container = document.getElementById('seletorVideosEtapa');
+        if (!container) return;
+
+        container.innerHTML = VIDEOS_DISPONIVEIS.map((v) => {
+          const ativo = v.id === videoAtualId;
+          return `
+            <button
+              type="button"
+              data-selecionar-video="${v.id}"
+              class="w-full text-left px-3.5 py-2.5 rounded-xl border text-xs transition ${
+                ativo
+                  ? 'bg-marinho-800 text-white border-marinho-800 font-semibold shadow-2xs'
+                  : 'bg-white text-slate-700 border-slate-200 hover:border-esmeralda-500 hover:bg-esmeralda-50/40'
+              }"
+            >
+              <div class="flex items-center justify-between gap-2">
+                <span class="truncate">${escaparHtml(v.titulo)}</span>
+                <span class="text-[11px] px-2 py-0.5 rounded-md ${
+                  ativo ? 'bg-esmeralda-500 text-white' : 'bg-slate-100 text-slate-600'
+                } shrink-0">${ativo ? 'Ativo' : 'Ver'}</span>
+              </div>
+              <p class="text-[11px] ${ativo ? 'text-slate-200' : 'text-slate-500'} mt-0.5">${escaparHtml(v.canal)}</p>
+            </button>
+          `;
+        }).join('');
+
+        container.querySelectorAll('[data-selecionar-video]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            selecionarVideo(btn.getAttribute('data-selecionar-video'));
+          });
+        });
+      }
+
+      function atualizarProgressoGlobal() {
+        let total = 0;
+        let feitos = 0;
+
+        ETAPAS.forEach((etapa) => {
+          etapa.criterios.forEach((_, idx) => {
+            total++;
+            if (checklistState[`${etapa.id}-${idx}`]) feitos++;
+          });
+        });
+
+        const pct = total > 0 ? Math.round((feitos / total) * 100) : 0;
+        const pctEl = document.getElementById('globalProgressPct');
+        const barEl = document.getElementById('globalProgressBar');
+        const txtEl = document.getElementById('globalProgressText');
+
+        if (pctEl) pctEl.textContent = `${pct}%`;
+        if (barEl) barEl.style.width = `${pct}%`;
+        if (txtEl) txtEl.textContent = `${feitos} de ${total} critérios concluídos nas 5 etapas.`;
+      }
+
+      function corDificuldade(dif) {
+        if (dif === 'Fácil') return 'bg-sky-50 text-sky-800 border-sky-200';
+        if (dif === 'Intermédio') return 'bg-esmeralda-50 text-esmeralda-800 border-esmeralda-200';
+        return 'bg-amber-50 text-amber-800 border-amber-200';
+      }
+
+      function renderizarCartoesEtapas() {
+        const grelha = document.getElementById('grelhaEtapas');
+        if (!grelha) return;
+
+        const visiveis = ETAPAS.filter((e) => {
+          const okEtapa = estadoFiltro.etapa === 'todas' || e.id === estadoFiltro.etapa;
+          const okDif = estadoFiltro.dificuldade === 'todas' || e.dificuldade === estadoFiltro.dificuldade;
+          return okEtapa && okDif;
+        });
+
+        if (visiveis.length === 0) {
+          grelha.innerHTML = `
+            <div class="col-span-full bg-white rounded-2xl border border-slate-200 p-6 text-center space-y-2">
+              <p class="font-bold text-marinho-900">Nenhuma etapa corresponde aos filtros selecionados.</p>
+              <button id="btnLimparFiltroInline" type="button" class="px-4 py-2 rounded-xl text-xs font-semibold bg-marinho-800 text-white">
+                Ver todas as etapas
+              </button>
+            </div>
+          `;
+          const btnInline = document.getElementById('btnLimparFiltroInline');
+          if (btnInline) btnInline.addEventListener('click', reporFiltros);
+          return;
+        }
+
+        grelha.innerHTML = visiveis
+          .map((etapa) => {
+            const videoAssoc = VIDEOS_DISPONIVEIS.find((v) => v.id === etapa.videoId) || VIDEOS_DISPONIVEIS[0];
+            const feitosEtapa = etapa.criterios.filter((_, idx) => !!checklistState[`${etapa.id}-${idx}`]).length;
+
+            const checklistHtml = etapa.criterios
+              .map((crit, idx) => {
+                const key = `${etapa.id}-${idx}`;
+                const checked = !!checklistState[key];
+                return `
+                  <label class="flex items-start gap-2.5 p-2 rounded-xl border ${
+                    checked ? 'bg-esmeralda-50 border-esmeralda-300 text-marinho-900' : 'bg-slate-50 border-slate-200 text-slate-700'
+                  } cursor-pointer transition">
+                    <input
+                      type="checkbox"
+                      data-check-key="${key}"
+                      ${checked ? 'checked' : ''}
+                      class="mt-0.5 h-4 w-4 rounded border-slate-300 text-esmeralda-600 focus:ring-esmeralda-500 shrink-0"
+                    />
+                    <span class="text-xs leading-snug">${escaparHtml(crit)}</span>
+                  </label>
+                `;
+              })
+              .join('');
+
+            return `
+              <article class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col justify-between space-y-4">
+                <div class="space-y-3">
+                  <div class="flex items-center justify-between gap-2">
+                    <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-marinho-800 text-white">
+                      ${escaparHtml(etapa.ordem)}
+                    </span>
+                    <span class="px-2.5 py-1 rounded-full text-xs font-semibold border ${corDificuldade(etapa.dificuldade)}">
+                      ${escaparHtml(etapa.dificuldade)}
+                    </span>
+                  </div>
+
+                  <h3 class="text-base sm:text-lg font-bold text-marinho-900 leading-snug">
+                    ${escaparHtml(etapa.nome)}
+                  </h3>
+
+                  <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    ${escaparHtml(etapa.descricao)}
+                  </p>
+
+                  <div class="flex flex-wrap items-center gap-2 pt-1">
+                    <button
+                      type="button"
+                      data-ver-video="${videoAssoc.id}"
+                      data-etapa-nome="${escaparHtml(etapa.nome)}"
+                      class="px-3 py-2 rounded-xl text-xs font-semibold bg-esmeralda-600 hover:bg-esmeralda-700 text-white transition"
+                    >
+                      Carregar vídeo no player
+                    </button>
+                    <a
+                      href="https://www.youtube.com/watch?v=${encodeURIComponent(videoAssoc.youtubeId)}"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="px-3 py-2 rounded-xl text-xs font-semibold bg-white hover:bg-slate-100 text-marinho-900 border border-slate-300 transition"
+                    >
+                      Abrir no YouTube
+                    </a>
+                  </div>
+                </div>
+
+                <div class="pt-3 border-t border-slate-100 space-y-2">
+                  <div class="flex items-center justify-between text-xs">
+                    <span class="font-bold text-marinho-900">Autoavaliação</span>
+                    <span class="font-semibold text-esmeralda-700">${feitosEtapa}/${etapa.criterios.length}</span>
+                  </div>
+                  <div class="space-y-1.5">
+                    ${checklistHtml}
+                  </div>
+                </div>
+              </article>
+            `;
+          })
+          .join('');
+
+        grelha.querySelectorAll('[data-ver-video]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const vid = btn.getAttribute('data-ver-video');
+            const nome = btn.getAttribute('data-etapa-nome');
+            selecionarVideo(vid, nome);
+            document.getElementById('painelPlayer')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          });
+        });
+
+        grelha.querySelectorAll('[data-check-key]').forEach((cb) => {
+          cb.addEventListener('change', (e) => {
+            const key = e.target.getAttribute('data-check-key');
+            checklistState[key] = e.target.checked;
+            gravarJson(STORAGE_CHECKLIST, checklistState);
+            atualizarProgressoGlobal();
+            renderizarCartoesEtapas();
+          });
+        });
+      }
+
+      function reporFiltros() {
+        estadoFiltro = { etapa: 'todas', dificuldade: 'todas' };
+        atualizarEstilosFiltros();
+        renderizarCartoesEtapas();
+      }
+
+      function atualizarEstilosFiltros() {
+        document.querySelectorAll('.filtro-etapa').forEach((btn) => {
+          const ativo = btn.getAttribute('data-etapa') === estadoFiltro.etapa;
+          btn.className = ativo
+            ? 'filtro-etapa px-3 py-2 rounded-xl text-xs font-semibold bg-marinho-800 text-white transition'
+            : 'filtro-etapa px-3 py-2 rounded-xl text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition';
+        });
+        document.querySelectorAll('.filtro-dif').forEach((btn) => {
+          const ativo = btn.getAttribute('data-dificuldade') === estadoFiltro.dificuldade;
+          btn.className = ativo
+            ? 'filtro-dif px-3 py-2 rounded-xl text-xs font-semibold bg-esmeralda-600 text-white transition'
+            : 'filtro-dif px-3 py-2 rounded-xl text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition';
+        });
+      }
+
+      // -------------------------------------------------------------------
+      // 4. CHAT DO TUTOR DE EDUCAÇÃO FÍSICA (RESPOSTA INSTANTÂNEA INTELIGENTE)
+      // -------------------------------------------------------------------
+      const RESPOSTAS_TUTOR = {
+        'alinhamento corporal':
+          'Alinhamento corporal no pino de braços (10.º ano): mantém pulsos, ombros, bacia e pés alinhados na vertical. Ativa os ombros ("empurrar o chão" com braços estendidos) e contrai o abdómen e os glúteos para evitar que a zona lombar arquee (hiperlordose).',
+        'colocação das mãos':
+          'Colocação das mãos: coloca as mãos no colchão à largura dos ombros, com os dedos bem afastados e apontados para a frente. Distribui a pressão entre a base da palma e a ponta dos dedos, que ajudam a travar pequenos desequilíbrios.',
+        'apoio na parede':
+          'Apoio na parede: coloca as mãos a cerca de 20–30 cm da parede, impulsiona uma perna e encosta os calcanhares com suavidade. Outra opção é subir os pés na parede com o apoio facial invertido, mantendo os braços estendidos e o olhar entre as mãos.',
+        'rolamento de saída':
+          'Rolamento de saída de segurança: se sentires que vais cair para a frente, flete os braços de forma progressiva, baixa o queixo ao peito e enrola as costas no colchão, terminando agrupado. Nunca estiques o pescoço para trás.',
+        'erros comuns no 10.º ano':
+          'Erros comuns no 10.º ano: (1) fletir os cotovelos ou "afundar" os ombros; (2) olhar para os pés em vez de olhar entre as mãos; (3) arquear a zona lombar por falta de tensão abdominal; (4) impulsionar sem união das pernas ou sem dominar o rolamento de saída.'
+      };
+
+      function responderTutor(pergunta) {
+        const chave = pergunta.toLowerCase().trim();
+        for (const [topico, resposta] of Object.entries(RESPOSTAS_TUTOR)) {
+          if (chave.includes(topico)) return resposta;
+        }
+        if (chave.includes('mão') || chave.includes('mao') || chave.includes('dedo')) {
+          return RESPOSTAS_TUTOR['colocação das mãos'];
+        }
+        if (chave.includes('alinh') || chave.includes('lombar') || chave.includes('bacia')) {
+          return RESPOSTAS_TUTOR['alinhamento corporal'];
+        }
+        if (chave.includes('parede') || chave.includes('caranguejo')) {
+          return RESPOSTAS_TUTOR['apoio na parede'];
+        }
+        if (chave.includes('saída') || chave.includes('saida') || chave.includes('rolamento') || chave.includes('segur')) {
+          return RESPOSTAS_TUTOR['rolamento de saída'];
+        }
+        return (
+          'No pino de braços (10.º ano), foca-te em 4 pontos: (1) mãos à largura dos ombros com dedos afastados; ' +
+          '(2) olhar entre as mãos; (3) braços estendidos, ombros ativos e abdómen/glúteos firmes; ' +
+          '(4) impulso controlado com união de pernas e saída de segurança por rolamento à frente.'
+        );
+      }
+
+      function renderizarChat() {
+        const lista = document.getElementById('chatLista');
+        if (!lista) return;
+
+        if (chatHistorico.length === 0) {
+          chatHistorico = [
+            {
+              autor: 'tutor',
+              texto:
+                'Olá! Sou o teu Tutor de Educação Física para o Pino de Braços (10.º Ano). Clica numa pergunta rápida acima ou escreve a tua dúvida.'
+            }
+          ];
+          gravarJson(STORAGE_CHAT, chatHistorico);
+        }
+
+        lista.innerHTML = chatHistorico
+          .map((m) => {
+            const isUser = m.autor === 'user';
+            return `
+              <div class="flex items-start gap-2.5 ${isUser ? 'flex-row-reverse' : ''}">
+                <div class="w-7 h-7 rounded-full ${
+                  isUser ? 'bg-marinho-800 text-white' : 'bg-esmeralda-600 text-white'
+                } text-xs font-bold flex items-center justify-center shrink-0">
+                  ${isUser ? 'Eu' : 'EF'}
+                </div>
+                <div class="max-w-[85%] rounded-2xl px-4 py-2.5 text-xs sm:text-sm leading-relaxed ${
+                  isUser
+                    ? 'bg-marinho-800 text-white rounded-tr-sm'
+                    : 'bg-slate-50 text-slate-800 border border-slate-200 rounded-tl-sm'
+                }">
+                  ${escaparHtml(m.texto)}
+                </div>
+              </div>
+            `;
+          })
+          .join('');
+
+        lista.scrollTop = lista.scrollHeight;
+      }
+
+      function enviarMensagemChat(texto) {
+        const limpo = (texto || '').trim();
+        if (!limpo) return;
+
+        chatHistorico.push({ autor: 'user', texto: limpo });
+        const resposta = responderTutor(limpo);
+        chatHistorico.push({ autor: 'tutor', texto: resposta });
+
+        gravarJson(STORAGE_CHAT, chatHistorico);
+        renderizarChat();
+      }
+
+      // -------------------------------------------------------------------
+      // 5. GUIÃO PEDAGÓGICO (IMPRIMIR, COPIAR, DESCARREGAR)
+      // -------------------------------------------------------------------
+      function obterTextoGuiao() {
+        return [
+          'GUIÃO PEDAGÓGICO DE AULA — GINÁSTICA DE SOLO: PINO DE BRAÇOS (10.º ANO)',
+          '=========================================================================',
+          '',
+          '1. ORGANIZAÇÃO TÉCNICA BASE',
+          '- Mãos: à largura dos ombros, dedos afastados e apontados à frente; peso na base da palma e ponta dos dedos.',
+          '- Cabeça e olhar: posição neutra, olhar fixo entre as mãos.',
+          '- Tronco e ombros: braços estendidos, ombros a empurrar o chão, abdómen e glúteos contraídos.',
+          '',
+          '2. SEQUÊNCIA DE PROGRESSÃO',
+          '- Etapa 1: Pré-requisitos e força (prancha, apoio facial, força de ombros e core).',
+          '- Etapa 2: Apoio facial invertido na parede / caranguejo.',
+          '- Etapa 3: Impulso e subida controlada com união das pernas.',
+          '- Etapa 4: Pino de braços livre e alinhamento vertical.',
+          '- Etapa 5: Saída de segurança / rolamento à frente.',
+          '',
+          '3. AJUDA DO PAR E SEGURANÇA',
+          '- Utilizar colchões adequados e espaço livre.',
+          '- Ajuda lateral junto à bacia sem puxões bruscos.',
+          '- Rolamento à frente de segurança (queixo ao peito, braços a ceder de forma controlada).'
+        ].join('\n');
+      }
+
+      // -------------------------------------------------------------------
+      // 6. INICIALIZAÇÃO DE EVENTOS
+      // -------------------------------------------------------------------
+      document.addEventListener('DOMContentLoaded', () => {
+        selecionarVideo('v1', ETAPAS[0].nome);
+        atualizarProgressoGlobal();
+        renderizarCartoesEtapas();
+        renderizarChat();
+
+        document.querySelectorAll('.filtro-etapa').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            estadoFiltro.etapa = btn.getAttribute('data-etapa');
+            atualizarEstilosFiltros();
+            renderizarCartoesEtapas();
+          });
+        });
+
+        document.querySelectorAll('.filtro-dif').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            estadoFiltro.dificuldade = btn.getAttribute('data-dificuldade');
+            atualizarEstilosFiltros();
+            renderizarCartoesEtapas();
+          });
+        });
+
+        document.getElementById('btnResetFiltros')?.addEventListener('click', reporFiltros);
+
+        document.getElementById('btnLimparProgresso')?.addEventListener('click', () => {
+          checklistState = {};
+          gravarJson(STORAGE_CHECKLIST, checklistState);
+          atualizarProgressoGlobal();
+          renderizarCartoesEtapas();
+          mostrarAviso('Autoavaliação reposta.');
+        });
+
+        document.querySelectorAll('.chip-pergunta').forEach((chip) => {
+          chip.addEventListener('click', () => {
+            enviarMensagemChat(chip.textContent);
+          });
+        });
+
+        document.getElementById('chatForm')?.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const input = document.getElementById('chatInput');
+          if (!input) return;
+          enviarMensagemChat(input.value);
+          input.value = '';
+        });
+
+        document.getElementById('btnLimparChat')?.addEventListener('click', () => {
+          chatHistorico = [];
+          gravarJson(STORAGE_CHAT, chatHistorico);
+          renderizarChat();
+          mostrarAviso('Histórico do chat limpo.');
+        });
+
+        document.getElementById('btnImprimirGuiao')?.addEventListener('click', () => {
+          window.print();
+        });
+
+        document.getElementById('btnCopiarGuiao')?.addEventListener('click', () => {
+          const texto = obterTextoGuiao();
+          const temp = document.createElement('textarea');
+          temp.value = texto;
+          temp.setAttribute('readonly', '');
+          temp.style.position = 'absolute';
+          temp.style.left = '-9999px';
+          document.body.appendChild(temp);
+          temp.select();
+          document.execCommand('copy');
+          document.body.removeChild(temp);
+          mostrarAviso('Guião de aula copiado para a área de transferência.');
+        });
+
+        document.getElementById('btnDescarregarGuiao')?.addEventListener('click', () => {
+          const blob = new Blob([obterTextoGuiao()], { type: 'text/plain;charset=utf-8' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'guiao-pino-de-bracos-10ano.txt';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+          mostrarAviso('Guião descarregado em formato .txt.');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
